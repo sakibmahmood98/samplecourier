@@ -1,0 +1,106 @@
+{% load static %} {% static "" as baseURL %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ParcelCourier</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="{{baseURL}}style.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/octoshrimpy/bulma-o-steps/master/bulma-steps.css">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rambla:ital,wght@1,700&display=swap" rel="stylesheet"> 
+  </head>
+  <body>
+    <header class="hero is-light" style="padding: 10px;">
+        <div class="hero-head">
+          <!-- Main container -->
+<nav class="level">
+    <!-- Left side -->
+    <div class="level-left">
+      <div class="level-item">
+
+      </div>
+      <div class="level-item">
+            <p style="font-size: 35px; font-family: 'Rambla', sans-serif; margin-top: -15px;"> ParcelCourier</p>
+      </div>
+      <div class="level-item">
+        <a class="navbar-item" href="/ddash">
+          Order List
+        </a>
+      </div>
+    </div>
+  
+    <!-- Right side -->
+    <div class="level-right">
+      <p class="level-item"><strong>{{ username }}</strong></p>
+      <form action="/login">
+        {% csrf_token %}
+      <button class="button is-danger">
+        Logout
+      </button>
+    </form>
+    </div>
+  </nav>
+        </div>
+      </header>
+      {% if picked %}
+        <p class="title is-5">{{ picked }}</p>
+      {% elif delivered %}
+        <p class="title is-5">{{ delivered }}</p>
+      {% else %}
+
+      <div class="section">
+        <div class="container">
+          <h1 class="subtitle is-2"><strong>Marchant Dashboard | </strong>Order List</h1>
+          <hr>
+          <div class="box" style="width: fit-content;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Invoice ID</th>
+                  <th>Admin Name</th>
+                  <th>Admin Phone</th>
+                  <th>Receiver's Name</th>
+                  <th>Receiver's Phone</th>
+                  <th>Deliver Addr.</th>
+                  <th>Parcel Product Type</th>
+                  <th>Parcel Destination Choice</th>
+                  <th>Parcel Destination</th>
+                  <th>Total Cost</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in orders %}
+                <form action="/picked-order" method="POST">
+                  {% csrf_token %}
+                  <tr>
+                    <td>{{ order.invoice_id }}</td>
+                    <td>{{ order.sender_name }}</td>
+                    <td>{{ order.sender_phone }}</td>
+                    <td>{{ order.receiver_name }}</td>
+                    <td>{{ order.receiver_phone }}</td>
+                    <td>{{ order.deliver_address }}</td>
+                    <td>{{ order.parcel_product_type}}</td>
+                    <td>{{ order.parcel_dest_choice }}</td>
+                    <td>{{ order.parcel_dest}}</td>
+                    <td>{{ order.total_price }} BDT</td>
+                    <td><button class="button is-primary is-small" value="{{ order.invoice_id }}" name="pickup-btn">
+                      Pickup 
+                    </button></td>
+                  </tr>
+                </form>
+                 {% endfor %}
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+  </body>
+</html>

@@ -1,0 +1,300 @@
+{% load static %} {% static "" as baseURL %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ParcelCourier</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="{{baseURL}}style.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/octoshrimpy/bulma-o-steps/master/bulma-steps.css">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rambla:ital,wght@1,700&display=swap" rel="stylesheet">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+</style>
+  </head>
+  <body>
+    <header class="hero is-light" style="padding: 10px;">
+        <div class="hero-head">
+          <!-- Main container -->
+<nav class="level">
+    <!-- Left side -->
+    <div class="level-left">
+      <div class="level-item">
+
+      </div>
+      <div class="level-item">
+            <p style="font-size: 35px; font-family: 'Rambla', sans-serif; margin-top: -15px;"> ParcelCourier</p>
+      </div>
+      <div class="level-item">
+        <a class="navbar-item" href="/cdash">
+          Place Order
+        </a>
+      </div>
+      <div class="level-item">
+        <a class="navbar-item" href="/order-history">
+          Order History
+        </a>
+      </div>
+
+    </div>
+  
+    <!-- Right side -->
+    <div class="level-right">
+      <p class="level-item"><strong>{{ username }}</strong></p>
+      <form action="/login">
+        {% csrf_token %}
+      <button class="button is-danger">
+        Logout 
+      </button>
+    </form>
+    </div>
+  </nav>
+        </div>
+      </header>
+      
+      {% if already %}
+        <p class="title is-5">{{ already }}</p>
+      {% else %}
+      <div class="section">
+        <div class="container">
+          <h1 class="subtitle is-2"><strong>Admin Dashboard | </strong>Place Order</h1>
+
+
+
+            <h2>Responsive Column Cards</h2>
+<p>Resize the browser window to see the effect.</p>
+
+<div class="row">
+    <div class="column">
+    <div class="card">
+      <h3>Destination Type</h3>
+      <p>600 mg to 2 kg</p>
+      <p>3 kg</p>
+        <p>4 kg</p>
+        <p>5 kg</p>
+        <p>Cod Charge</p>
+        <p>Return Charge</p>
+
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+
+        <h3>Inside of Dhaka</h3>
+        <p>60/-</p>
+        <p>70/-</p>
+        <p>80/-</p>
+        <p>90/-</p>
+        <p>No Cod charge add.</p>
+        <p>No Return charge add.</p>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <h3>Dvision of Dhaka</h3>
+        <p>110/-</p>
+        <p>130/-</p>
+        <p>150/-</p>
+        <p>170/-</p>
+        <p>1% Cod charge add.</p>
+        <p>50% Return charge add.</p>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <h3>Outside of Dhaka</h3>
+        <p>130/-</p>
+        <p>150/-</p>
+        <p>170/-</p>
+        <p>190/-</p>
+        <p>1% Cod charge add.</p>
+        <p>50% Return charge add.</p>
+    </div>
+  </div>
+</div>
+<hr>
+          <div class="columns">
+            <form action="" method="POST" name="Cost">
+              {% csrf_token %}
+              <div class="column is-narrow">
+                <div class="box" style="width: 400px;">
+                  <p class="title is-5">Cost Calculation</p>
+                  <hr>
+
+
+                     <div class="field has-addons">
+                        <div class="control">
+                            <label for="parcel_product_type">Choose type:</label> &nbsp;
+                            <div class="select">
+                                <select name="parcel_product_type" id="parcel_product_type">
+                                    <option value="NN">None</option>
+                                    <option value="FR">Fragile</option>
+                                    <option value="LQ">Liquid</option>
+                                  </select>
+                            </div>
+                        </div>
+                      </div>
+
+
+                  <div class="field has-addons">
+                        <div class="control">
+                            <label for="weight">Choose Weight:</label> &nbsp;
+                            <div class="select">
+                                <select name="weight" id="weight">
+                                    <option value=0>None</option>
+                                    <option value=2>500 gm to 2 KG</option>
+                                    <option value=3>3 KG</option>
+                                    <option value=4>4 KG</option>
+                                    <option value=5>5 KG</option>
+                                  </select>
+                            </div>
+                        </div>
+                      </div>
+
+
+
+
+
+                    <div class="field has-addons">
+                        <div class="control">
+                            <label for="parcel_dest_choice">Choose Destination Type:</label> &nbsp;
+                            <div class="select">
+                                <select name="parcel_dest_choice" id="parcel_dest_choice"  onchange="output();">
+                                    <option value="NN">None</option>
+                                    <option value="DH">Dhaka</option>
+                                    <option value="DD">Division_of_dhaka</option>
+                                    <option value="OD">Outside_of_dhaka</option>
+                                  </select>
+                            </div>
+                        </div>
+                      </div>
+
+                  <label class="label">Parcel Destination</label>
+                  <p class="help">1% Cod charge add.</p>
+                  <p class="help">50% Return charge add.</p>
+                  <div class="field has-addons">
+                    <p class="control">
+                      <input class="input" type="text" placeholder="parcel_dest" name="parcel_dest" required>
+                    </p>
+                    <p class="control">
+                    </p>
+                  </div>
+
+                  <div class="control">
+                    <button class="button is-info" name="cost_cal" value="cost_cal">Calculate</button>
+                  </div>
+                  <hr>
+                  {% if total_price %}
+                    <span><h6 class="title is-6">Total Cost: {{ total_price }} BDT</h6></span>
+                  {% endif %}
+  
+                </div>
+              </div>
+            </form>
+            <div class="column">
+              <form action="" method="POST">
+                {% csrf_token %}
+                <div class="box">
+                  <p class="title is-5">Delivery Information</p>
+                  <hr>
+                  <div class="field">
+                    <label class="label">Reciever's Name</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="e.g Sakib Mahmood" name="rcvr_name" required>
+                    </div>
+                  </div>
+                  
+                  <div class="field">
+                    <label class="label">Reciever's Email</label>
+                    <div class="control">
+                      <input class="input" type="email" placeholder="e.g. sakibmahmood09@gmail.com" name="rcvr_email" required>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="label">Reciever's Phone</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="e.g. phone" name="rcvr_phone"required>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="label">Pickup Address</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="e.g. address" name="pickup_address">
+                    </div>
+                  </div>
+  
+                  <div class="field">
+                    <label class="label">Deliver Address</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="e.g. address" name="deliver_address" required>
+                    </div>
+                  </div>
+  
+                  <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                      <button class="button is-primary"  name="confirm" value="confirm">Confirm</button>
+                    </div>
+                  </div>
+  
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+
+      
+  </body>
+</html>
